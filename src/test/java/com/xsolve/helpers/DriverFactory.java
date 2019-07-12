@@ -13,7 +13,7 @@ public class DriverFactory {
     public static WebDriver getDriver(DriverType driver_type) throws NoSuchDriverException{
         if (driver_instance == null) {
             getSpecificDriver(driver_type);
-            driver_instance.get("http://www.kurs-selenium.pl/demo/");
+            driver_instance.get("https://rekrutacjaqa2.xsolve.software/index.php?route=common/home");
             driver_instance.manage().window().maximize();
         }
 

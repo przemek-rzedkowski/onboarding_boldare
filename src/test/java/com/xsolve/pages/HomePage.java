@@ -21,7 +21,7 @@ public class HomePage {
     @FindBy(xpath = "//button[@class = \"btn btn-inverse btn-block btn-lg dropdown-toggle\"]")
     private WebElement cartButton;
 
-    @FindBy(xpath = "//strong[contains(text(), \" Checkout\")]")
+    @FindBy(xpath = "//strong[contains(text(), \" Checkout\")]")                                        //z tym jest problem
     private WebElement checkoutButton;
 
     public HomePage(WebDriver driver) {

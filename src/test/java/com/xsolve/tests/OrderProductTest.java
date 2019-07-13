@@ -3,6 +3,7 @@ package com.xsolve.tests;
 import com.xsolve.pages.CartPage;
 import com.xsolve.pages.CheckoutPage;
 import com.xsolve.pages.HomePage;
+import com.xsolve.pages.OrderPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -40,5 +41,8 @@ public class OrderProductTest extends BaseTest{
                 .continueToOrderConfirmation();
         Assert.assertTrue(checkoutPage.checkIfTotalPaymentIsCorrect());
         checkoutPage.confirmOrder();
+        OrderPage orderPage = new OrderPage(driver);
+        Assert.assertTrue(orderPage.checkIfOrderIsSuccessful());
+        orderPage.continueToNextPage();
     }
 }

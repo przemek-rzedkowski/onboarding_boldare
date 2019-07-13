@@ -1,6 +1,7 @@
 package com.xsolve.tests;
 
 import com.xsolve.pages.CartPage;
+import com.xsolve.pages.CheckoutPage;
 import com.xsolve.pages.HomePage;
 import org.testng.Assert;
 import org.testng.annotations.*;
@@ -19,6 +20,11 @@ public class OrderProductTest extends BaseTest{
         cartPage.changeProduct1Quantity()
                 .refreshProduct1Quantity();
         Assert.assertEquals(cartPage.getSuccessText(), "Success: You have modified your shopping cart!\n×");
+        cartPage.checkout();
 
+        CheckoutPage checkoutPage = new CheckoutPage(driver);
+        checkoutPage.setGuestPurchase();
+        Assert.assertEquals(checkoutPage.getGuestButtonStep2Text(), "Step 2: Billing Details");
+        checkoutPage.switchToBillingDetails();
     }
 }

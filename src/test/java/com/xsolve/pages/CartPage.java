@@ -28,6 +28,9 @@ public class CartPage {
     @FindBy(xpath = "//div[contains(text(), \" Success: You have modified your shopping cart!\")]")
     private WebElement modificationSuccessAlert;
 
+    @FindBy(xpath = "//a[contains(text(), \"Checkout\")]")
+    private WebElement checkoutButton;
+
 
 
     public String getAlertText() {
@@ -50,5 +53,9 @@ public class CartPage {
     public void refreshProduct1Quantity() {
         //helper.waitForElementToBeDisplayed();
         product1RefreshButton.click();
+    }
+
+    public void checkout() {
+        checkoutButton.click();
     }
 }

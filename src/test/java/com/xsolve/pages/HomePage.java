@@ -10,6 +10,7 @@ public class HomePage {
 
     private SeleniumHelper helper;
     private WebDriver driver;
+    JavascriptExecutor je;
 
     @FindBy(xpath = "//button[contains(@onclick, \"42\")][1]")
     private WebElement product1AddButton;
@@ -17,7 +18,7 @@ public class HomePage {
     @FindBy(xpath = "//button[contains(@onclick, \"41\")][1]")
     private WebElement product3AddButton;
 
-    @FindBy(xpath = "//span[@id = \"cart-total\"]")
+    @FindBy(xpath = "//button[@class = \"btn btn-inverse btn-block btn-lg dropdown-toggle\"]")
     private WebElement cartButton;
 
     @FindBy(xpath = "//strong[contains(text(), \" Checkout\")]")
@@ -27,24 +28,27 @@ public class HomePage {
         this.driver = driver;
         helper = new SeleniumHelper(driver);
         PageFactory.initElements(driver, this);
+        je = (JavascriptExecutor) driver;
     }
 
     public HomePage addProduct1ToCart() {
+        helper.waitForElementToBeDisplayed(product1AddButton);
         product1AddButton.click();
         return this;
     }
 
     public HomePage addProduct3ToCart() {
+        je.executeScript("window.scrollBy(0, 1000)");
         helper.waitForElementToBeDisplayed(product3AddButton);
+        //actions.moveToElement(product3AddButton).click().build().perform();
         product3AddButton.click();
         return this;
     }
 
     public HomePage openCartDropdown() {
         helper.waitForElementToBeDisplayed(cartButton);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(cartButton).click().perform();
-        //cartButton.click();
+        //actions.moveToElement(cartButton).perform();
+        cartButton.click();
         return this;
     }
 

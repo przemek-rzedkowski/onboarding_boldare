@@ -10,6 +10,7 @@ public class OrderProductTest extends BaseTest{
 
     @Test
     public void buyProduct() {
+        //driver.manage().timeouts().implicitlyWait(2L, TimeUnit.SECONDS);
         HomePage homePage = new HomePage(driver);
         homePage.addProduct1ToCart()
                 .addProduct3ToCart()
@@ -25,6 +26,19 @@ public class OrderProductTest extends BaseTest{
         CheckoutPage checkoutPage = new CheckoutPage(driver);
         checkoutPage.setGuestPurchase();
         Assert.assertEquals(checkoutPage.getGuestButtonStep2Text(), "Step 2: Billing Details");
-        checkoutPage.switchToBillingDetails();
+        checkoutPage.switchToBillingDetails()
+                .fillBillingDetailsForm()
+                .continueToDeliveryDetails();
+        Assert.assertTrue(checkoutPage.checkIfStep4AutomaticallyOpened());
+        checkoutPage.switchToDeliveryDetails();
+        Assert.assertTrue(checkoutPage.checkDeliveryDetailsAutoComplete());
+        checkoutPage.continueToDeliveryMethod()
+                .addDeliveryComment()
+                .continueToPaymentMethod()
+                .addPaymentComment()
+                .checkAgreementBox()
+                .continueToOrderConfirmation();
+        Assert.assertTrue(checkoutPage.checkIfTotalPaymentIsCorrect());
+        checkoutPage.confirmOrder();
     }
 }

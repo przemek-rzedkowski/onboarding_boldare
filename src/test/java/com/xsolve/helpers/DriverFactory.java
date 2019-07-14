@@ -35,7 +35,7 @@ public class DriverFactory {
                 break;
 
             case FIREFOX:
-                File ff_driver_exe = new File("src//main//resources//executables//drivers//geckodriver.exe");
+                File ff_driver_exe = new File("src//main//resources//executables//drivers//geckodriver.exe");       // nie dzialala bez zmiennej srodowiskowej
                 GeckoDriverService ff_driver_service = new GeckoDriverService
                         .Builder()
                         .usingDriverExecutable(ff_driver_exe)
@@ -48,5 +48,9 @@ public class DriverFactory {
                 System.out.println("brak danego drivera");
                 throw new NoSuchDriverException();
         }
+    }
+
+    public static void resetDriver() {
+        driver_instance = null;
     }
 }

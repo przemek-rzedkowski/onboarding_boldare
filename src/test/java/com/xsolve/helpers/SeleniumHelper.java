@@ -22,7 +22,8 @@ public class SeleniumHelper {
     public static void takeScreenshot(WebDriver driver) throws IOException {
         TakesScreenshot takesScreenshot = (TakesScreenshot) driver;
         File screenshotFile = takesScreenshot.getScreenshotAs(OutputType.FILE);
-        File destinationFile = new File("src/main/rosources/" + LocalTime.now().getNano() + ".png");
+        File destinationFile = new File("src/main/resources/" + LocalTime.now().getNano() + ".png");
+        //File destinationFile = new File("G:\\\\screenshot2.png");
         Files.copy(screenshotFile.toPath(), destinationFile.toPath());
     }
 

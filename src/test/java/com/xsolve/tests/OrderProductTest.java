@@ -1,5 +1,8 @@
 package com.xsolve.tests;
 
+import com.xsolve.data.BuyProductData;
+import com.xsolve.helpers.ExcelHelper;
+import com.xsolve.helpers.TestListener;
 import com.xsolve.pages.CartPage;
 import com.xsolve.pages.CheckoutPage;
 import com.xsolve.pages.HomePage;
@@ -7,10 +10,18 @@ import com.xsolve.pages.OrderPage;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
+import java.io.File;
+import java.io.IOException;
+
+@Listeners(TestListener.class)
 public class OrderProductTest extends BaseTest{
 
-    @Test
-    public void buyProduct() {
+    @Test(dataProvider = "getData")
+    public void buyProduct(String firstName, String lastName,
+                           String email,
+                           String company, String address1,
+                           String address2, String city, String postalCode,
+                           String country, String zone) {
         //driver.manage().timeouts().implicitlyWait(2L, TimeUnit.SECONDS);
         HomePage homePage = new HomePage(driver);
         homePage.addProduct1ToCart()
@@ -28,11 +39,11 @@ public class OrderProductTest extends BaseTest{
         checkoutPage.setGuestPurchase();
         Assert.assertEquals(checkoutPage.getGuestButtonStep2Text(), "Step 2: Billing Details");
         checkoutPage.switchToBillingDetails()
-                .fillBillingDetailsForm()
+                .fillBillingDetailsForm(firstName, lastName, email, company, address1, address2, city, postalCode, country, zone)
                 .continueToDeliveryDetails();
         Assert.assertTrue(checkoutPage.checkIfStep4AutomaticallyOpened());
         checkoutPage.switchToDeliveryDetails();
-        Assert.assertTrue(checkoutPage.checkDeliveryDetailsAutoComplete());
+        Assert.assertTrue(checkoutPage.checkDeliveryDetailsAutoComplete(firstName, company, zone));
         checkoutPage.continueToDeliveryMethod()
                 .addDeliveryComment()
                 .continueToPaymentMethod()
@@ -44,5 +55,17 @@ public class OrderProductTest extends BaseTest{
         OrderPage orderPage = new OrderPage(driver);
         Assert.assertTrue(orderPage.checkIfOrderIsSuccessful());
         orderPage.continueToNextPage();
+        Assert.assertTrue(homePage.checkIfCartIsEmpty());
+    }
+
+    @DataProvider
+    public Object[][] getData() {
+        Object[][] data = null;
+        try {
+            data = ExcelHelper.readExcelFile(new File("src//main//resources//files//dane_buyProduct.xlsx"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return data;
     }
 }

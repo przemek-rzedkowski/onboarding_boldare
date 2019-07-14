@@ -95,7 +95,7 @@ public class CheckoutPage {
 
     //step5: payment method
 
-    @FindBy(xpath = "//div[@id='collapse-payment-method']//textarea[@name='comment']")
+    @FindBy(xpath = "//div[@id='collapse-payment-method']//textarea[@name='comment']")              //po deliveryCommentField wpisuje i tu
     private WebElement paymentCommentField;
 
     @FindBy(xpath = "//input[@name='agree']")
@@ -131,22 +131,27 @@ public class CheckoutPage {
         return this;
     }
 
-    public CheckoutPage fillBillingDetailsForm() {
+    public CheckoutPage fillBillingDetailsForm(String firstName, String lastName,
+                                               String email,
+                                               String company, String address1,
+                                               String address2, String city, String postalCode,
+                                               String country, String zone) {
+    //public CheckoutPage fillBillingDetailsForm(String firstName) {
         helper.waitForElementToBeDisplayed(firstnameInput);
-        firstnameInput.sendKeys("Mariusz");
-        lastnameInput.sendKeys("Maciak");
+        firstnameInput.sendKeys(firstName);
+        lastnameInput.sendKeys(lastName);
         helper.waitForElementToBeDisplayed(emailInput);
-        emailInput.sendKeys("maciak@email.com");
+        emailInput.sendKeys(email);
         telephoneInput.sendKeys("123456789");
-        companyInput.sendKeys("mma");
-        address1Input.sendKeys("Olszowa 2");
-        address2Input.sendKeys("some");
-        cityInput.sendKeys("Rawa");
-        postcodeInput.sendKeys("99-999");
+        companyInput.sendKeys(company);
+        address1Input.sendKeys(address1);
+        address2Input.sendKeys(address2);
+        cityInput.sendKeys(city);
+        postcodeInput.sendKeys(postalCode);
         Select countrySelect = new Select(countryInput);
-        countrySelect.selectByVisibleText("Poland");
+        countrySelect.selectByVisibleText(country);
         Select zoneSelect = new Select(zoneInput);
-        zoneSelect.selectByVisibleText("Lodzkie");
+        zoneSelect.selectByVisibleText(zone);
         return this;
     }
 
@@ -200,12 +205,12 @@ public class CheckoutPage {
         return totalPaymentField.getText().equals("$20,105.00") ? true : false;
     }
 
-    public boolean checkDeliveryDetailsAutoComplete() {
+    public boolean checkDeliveryDetailsAutoComplete(String firstName, String company, String zone) {
         helper.waitForElementToBeDisplayed(deliveryDetailsFirstnameField);
         Select zoneField = new Select(deliveryDetailsShippingZoneField);
-        if (!deliveryDetailsFirstnameField.getAttribute("value").equals("Mariusz")
-            ||! deliveryDetailsCompanyField.getAttribute("value").equals("mma")
-            || !zoneField.getFirstSelectedOption().getText().equals("Lodzkie")
+        if (!deliveryDetailsFirstnameField.getAttribute("value").equals(firstName)
+            ||! deliveryDetailsCompanyField.getAttribute("value").equals(company)
+            || !zoneField.getFirstSelectedOption().getText().equals(zone)
         ) {
             return false;
         }

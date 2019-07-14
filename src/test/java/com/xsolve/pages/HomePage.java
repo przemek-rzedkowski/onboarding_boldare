@@ -24,6 +24,9 @@ public class HomePage {
     @FindBy(xpath = "//strong[contains(text(), \" Checkout\")]")                                        //z tym jest problem
     private WebElement checkoutButton;
 
+    @FindBy(xpath ="//span[@id='cart-total']")
+    private WebElement cart_summary_field;
+
     public HomePage(WebDriver driver) {
         this.driver = driver;
         helper = new SeleniumHelper(driver);
@@ -46,6 +49,7 @@ public class HomePage {
     }
 
     public HomePage openCartDropdown() {
+        je.executeScript("window.scrollBy(0, -1000)");
         helper.waitForElementToBeDisplayed(cartButton);
         //actions.moveToElement(cartButton).perform();
         cartButton.click();
@@ -56,6 +60,11 @@ public class HomePage {
         helper.waitForElementToBeDisplayed(checkoutButton);
         checkoutButton.click();
         return this;
+    }
+
+    public boolean checkIfCartIsEmpty() {
+        helper.waitForElementToBeDisplayed(cart_summary_field);
+        return cart_summary_field.getText().equals("0 item(s) - $0.00") ? true : false;
     }
 
 }

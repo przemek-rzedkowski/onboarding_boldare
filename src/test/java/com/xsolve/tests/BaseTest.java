@@ -10,13 +10,14 @@ public abstract class BaseTest {
 
     protected WebDriver driver;
 
-    @BeforeTest
+    @BeforeMethod
     public void setUp() throws NoSuchDriverException {
         driver = DriverFactory.getDriver(DriverType.CHROME);
     }
 
-    @AfterTest
+    @AfterMethod
     public void tearDown() {
         //driver.quit();
+        DriverFactory.resetDriver();
     }
 }

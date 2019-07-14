@@ -7,6 +7,7 @@ import org.testng.ITestResult;
 import java.io.IOException;
 
 public class TestListener implements ITestListener {
+
     public void onTestStart(ITestResult result) {
 
     }

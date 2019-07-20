@@ -24,12 +24,10 @@ public class OrderPage {
     }
 
     public void continueToNextPage() {
-        helper.waitForElementToBeDisplayed(continueButton);
-        continueButton.click();
+        helper.waitForElementAndClick(continueButton);
     }
 
     public boolean checkIfOrderIsSuccessful() {
-        helper.waitForElementToBeDisplayed(orderSuccesfulField);
-        return orderSuccesfulField.getText().equals("Your order has been placed!") ? true : false;
+        return helper.waitForElementAndGetText(orderSuccesfulField).equals("Your order has been placed!");
     }
 }

@@ -1,0 +1,26 @@
+{
+	"test1" : {
+		"firstName" : "Mariusz",
+		"lastName" : "Maciak",
+		"email" : "maciak@email.com",
+		"company" : "mma",
+		"address1" : "Olszowa 2",
+		"address2" : "some",
+		"city" : "Rawa",
+		"postalCode" : "99-999",
+		"country" : "Poland",
+		"zone" : "lodzkie"
+	},
+	"test2" : {
+		"firstName" : "Maciek",
+		"lastName" : "Maciak",
+		"email" : "maciak@email.com",
+		"company" : "mma",
+		"address1" : "Olszowa 2",
+		"address2" : "some",
+		"city" : "Rawa",
+		"postalCode" : "99-999",
+		"country" : "Poland",
+		"zone" : "lodzkie"
+	}
+}

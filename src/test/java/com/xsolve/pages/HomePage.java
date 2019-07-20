@@ -15,6 +15,10 @@ public class HomePage {
     @FindBy(xpath = "//button[contains(@onclick, \"42\")][1]")
     private WebElement product1AddButton;
 
+    @FindBy(xpath = "//div[contains(@class,\"product-thumb\")][.//a[text()=\"%s\"]]\n" +
+            "//button[contains(@onclick,\"cart.add\")]\n")
+    private WebElement productAddButton;
+
     @FindBy(xpath = "//button[contains(@onclick, \"41\")][1]")
     private WebElement product3AddButton;
 
@@ -35,36 +39,30 @@ public class HomePage {
     }
 
     public HomePage addProduct1ToCart() {
-        helper.waitForElementToBeDisplayed(product1AddButton);
-        product1AddButton.click();
+        helper.waitForElementAndClick(product1AddButton);
         return this;
     }
 
     public HomePage addProduct3ToCart() {
         je.executeScript("window.scrollBy(0, 1000)");
-        helper.waitForElementToBeDisplayed(product3AddButton);
-        //actions.moveToElement(product3AddButton).click().build().perform();
-        product3AddButton.click();
+        helper.waitForElementAndClick(product3AddButton);
         return this;
     }
 
     public HomePage openCartDropdown() {
         je.executeScript("window.scrollBy(0, -1000)");
-        helper.waitForElementToBeDisplayed(cartButton);
+        helper.waitForElementAndClick(cartButton);
         //actions.moveToElement(cartButton).perform();
-        cartButton.click();
         return this;
     }
 
     public HomePage checkout() {
-        helper.waitForElementToBeDisplayed(checkoutButton);
-        checkoutButton.click();
+        helper.waitForElementAndClick(checkoutButton);
         return this;
     }
 
     public boolean checkIfCartIsEmpty() {
-        helper.waitForElementToBeDisplayed(cart_summary_field);
-        return cart_summary_field.getText().equals("0 item(s) - $0.00") ? true : false;
+        return helper.waitForElementAndGetText(cart_summary_field).equals("0 item(s) - $0.00");
     }
 
 }

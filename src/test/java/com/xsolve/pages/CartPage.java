@@ -34,25 +34,20 @@ public class CartPage {
 
 
     public String getAlertText() {
-        helper.waitForElementToBeDisplayed(minimumOrderAlert);
-        return minimumOrderAlert.getText();
+        return helper.waitForElementAndGetText(minimumOrderAlert);
     }
 
     public String getSuccessText() {
-        helper.waitForElementToBeDisplayed(modificationSuccessAlert);
-        return modificationSuccessAlert.getText();
+        return helper.waitForElementAndGetText(modificationSuccessAlert);
     }
 
     public CartPage changeProduct1Quantity() {
-        helper.waitForElementToBeDisplayed(product1QuantityField);
-        product1QuantityField.clear();
-        product1QuantityField.sendKeys("2");
+        helper.waitForElementAndSendKeys(product1QuantityField, "2");
         return this;
     }
 
     public void refreshProduct1Quantity() {
-        //helper.waitForElementToBeDisplayed();
-        product1RefreshButton.click();
+        helper.waitForElementAndClick(product1RefreshButton);
     }
 
     public void checkout() {

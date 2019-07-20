@@ -27,7 +27,7 @@ public class SeleniumHelper {
         Files.copy(screenshotFile.toPath(), destinationFile.toPath());
     }
 
-    public void waitForElementToBeDisplayed(By locator) {
+    private void waitForElementToBeDisplayed(By locator) {
         FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(5))
                 .pollingEvery(Duration.ofMillis(2000))
@@ -35,7 +35,7 @@ public class SeleniumHelper {
         wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public void waitForElementToBeDisplayed(WebElement element) {
+    private void waitForElementToBeDisplayed(WebElement element) {
         FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(5))
                 .pollingEvery(Duration.ofMillis(500))
@@ -43,11 +43,33 @@ public class SeleniumHelper {
         wait.until(ExpectedConditions.visibilityOf(element));
     }
 
-    public void waitForSizeOfListOfElements(List<WebElement> elements) {
+    private void waitForSizeOfListOfElements(List<WebElement> elements) {
         FluentWait<WebDriver> wait = new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(1000))
                 .ignoring(java.util.NoSuchElementException.class);
         wait.until(webDriver -> elements.size() > 0);
     }
+
+    public void waitForElementAndClick(WebElement element) {
+        waitForElementToBeDisplayed(element);
+        element.click();
+    }
+
+    public void waitForElementAndSendKeys(WebElement element, String keys) {
+        waitForElementToBeDisplayed(element);
+        element.clear();
+        element.sendKeys(keys);
+    }
+
+    public String waitForElementAndGetText(WebElement element) {
+        waitForElementToBeDisplayed(element);
+        return element.getText();
+    }
+
+    public boolean checkIfElementIsDisplayed(WebElement element) {
+        waitForElementToBeDisplayed(element);
+        return element.isDisplayed();
+    }
+
 }
